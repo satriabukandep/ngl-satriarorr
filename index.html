@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kirim Pesan Anonim</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url("https://files.catbox.moe/0aprp1.jpg") no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center; /* bikin kotak pas di tengah */
+    }
+    .box {
+      background: rgba(0,0,0,0.65);
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .header img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    h3, p {
+      margin: 4px 0;
+    }
+    textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 8px;
+    }
+    textarea {resize: none;}
+    button {
+      background: #000;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .link-btn {
+      display: inline-block;
+      text-decoration: none;
+      background: #000;
+      color: #fff;
+      padding: 12px;
+      border-radius: 8px;
+      width: 100%;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <div class="header">
+      <img src="https://files.catbox.moe/2g7vve.jpg" alt="foto profil">
+      <div>
+        <h3>satria keren bet aseli</h3>
+        <p>Kirim aku pesan anonim!</p>
+      </div>
+    </div>
+
+    <form id="msgForm">
+      <textarea id="pesan" rows="4" placeholder="Tulis pesanmu di sini..." required></textarea>
+      <button type="submit">Kirim!</button>
+    </form>
+
+    <a class="link-btn" href="https://t.me/satriabukanjomoks" target="_blank">
+      Dapatkan pesan untukmu sendiri!
+    </a>
+  </div>
+
+  <script>
+    const botToken = "7814381215:AAH6A3harmMoM7AcYYBAlwkc5wptp1ZUUNs"; // ganti token bot
+    const chatId = "7406270477"; // ganti chat_id
+
+    document.getElementById("msgForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const pesan = document.getElementById("pesan").value;
+
+      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: `📩 Pesan anonim baru:\n\n${pesan}`
+        })
+      }).then(res => {
+        if (res.ok) {
+          alert("Pesan terkirim!");
+          document.getElementById("pesan").value = "";
+        } else {
+          alert("Gagal mengirim pesan");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
